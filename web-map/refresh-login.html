@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>刷新登录状态</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .info {
+      background-color: #f8f8f8;
+      border-left: 4px solid #2196F3;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>刷新登录状态</h1>
+  
+  <div class="info">
+    <p>此页面可以帮助您清除浏览器缓存中的登录信息，解决管理员权限问题。</p>
+    <p>点击下方按钮后，您将被登出系统。请在之后重新登录。</p>
+  </div>
+  
+  <button onclick="clearLoginData()">清除登录数据并登出</button>
+  
+  <script>
+    function clearLoginData() {
+      // 清除本地存储中的登录信息
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_info');
+      
+      // 提示用户已清除
+      alert('登录信息已清除！请重新登录以获取最新权限。');
+      
+      // 重定向到登录页面
+      window.location.href = '/login';
+    }
+  </script>
+</body>
+</html> 

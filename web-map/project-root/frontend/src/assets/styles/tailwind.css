@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition-colors;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow p-4;
+  }
+}
+
+/* 自定义样式可以在这里添加 */ 

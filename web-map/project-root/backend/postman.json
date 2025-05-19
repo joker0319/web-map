@@ -1,0 +1,142 @@
+{
+  "info": {
+    "name": "徒步论坛API测试",
+    "description": "用于测试徒步平台论坛功能的API集合",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "获取帖子列表",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/forum/posts?page=1&sort=latest",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forum", "posts"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "sort",
+              "value": "latest"
+            }
+          ]
+        },
+        "header": [],
+        "description": "获取论坛帖子列表，支持分页和排序"
+      }
+    },
+    {
+      "name": "搜索帖子",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/forum/search?query=徒步&sort=latest",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forum", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "徒步"
+            },
+            {
+              "key": "sort",
+              "value": "latest"
+            }
+          ]
+        },
+        "header": [],
+        "description": "根据关键词搜索帖子"
+      }
+    },
+    {
+      "name": "发布帖子",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{base_url}}/api/forum/posts",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forum", "posts"]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"黄山徒步三日游经验分享\",\n  \"content\": \"作为一名热爱户外的旅行者，我最近完成了黄山三日徒步之旅，想分享一些经验给大家。\",\n  \"location\": \"安徽省黄山市\",\n  \"tags\": \"路线,经验,风景\",\n  \"userId\": 1\n}"
+        },
+        "description": "发布新帖子"
+      }
+    },
+    {
+      "name": "发布帖子(备用路径)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{base_url}}/api/forum",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forum"]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"黄山徒步三日游经验分享\",\n  \"content\": \"作为一名热爱户外的旅行者，我最近完成了黄山三日徒步之旅，想分享一些经验给大家。\",\n  \"location\": \"安徽省黄山市\",\n  \"tags\": \"路线,经验,风景\"\n}"
+        },
+        "description": "发布新帖子(备用路径)"
+      }
+    },
+    {
+      "name": "获取帖子详情",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/forum/posts/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forum", "posts", "1"]
+        },
+        "header": [],
+        "description": "获取指定ID的帖子详情"
+      }
+    },
+    {
+      "name": "验证Token有效性",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/auth/me",
+          "host": ["{{base_url}}"],
+          "path": ["api", "auth", "me"]
+        },
+        "header": [],
+        "description": "验证当前用户Token是否有效"
+      }
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{auth_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

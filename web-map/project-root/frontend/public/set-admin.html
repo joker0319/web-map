@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>设置管理员权限</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .info {
+      background-color: #f8f8f8;
+      border-left: 4px solid #2196F3;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .success {
+      background-color: #e8f5e9;
+      border-left: 4px solid #4CAF50;
+      padding: 10px;
+      margin: 10px 0;
+      display: none;
+    }
+    .error {
+      background-color: #ffebee;
+      border-left: 4px solid #f44336;
+      padding: 10px;
+      margin: 10px 0;
+      display: none;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>设置管理员权限</h1>
+  
+  <div class="info">
+    <p>此页面将直接修改本地存储中的用户信息，将用户"xxx"的isAdmin值设置为true。</p>
+    <p>这是一个临时解决方案，刷新页面或重新登录后，您的管理员权限应该正常工作。</p>
+  </div>
+  
+  <h2>当前登录信息</h2>
+  <pre id="currentUser">正在读取...</pre>
+  
+  <div class="success" id="successMessage">用户isAdmin属性已成功修改为true！请刷新页面测试权限。</div>
+  <div class="error" id="errorMessage"></div>
+  
+  <button onclick="setAdminStatus()">设置为管理员</button>
+  <button onclick="refreshApp()">刷新应用</button>
+  
+  <script>
+    // 显示当前用户信息
+    function showCurrentUser() {
+      const userInfo = localStorage.getItem('user_info');
+      const userElement = document.getElementById('currentUser');
+      
+      if (!userInfo || userInfo === 'undefined' || userInfo === 'null') {
+        userElement.textContent = '未找到用户信息，请先登录';
+        return false;
+      }
+      
+      try {
+        const user = JSON.parse(userInfo);
+        userElement.textContent = JSON.stringify(user, null, 2);
+        return user;
+      } catch (e) {
+        userElement.textContent = '解析用户信息失败: ' + e.message;
+        return false;
+      }
+    }
+    
+    // 设置用户为管理员
+    function setAdminStatus() {
+      const user = showCurrentUser();
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+      
+      if (!user) {
+        errorMessage.textContent = '无法修改：未找到有效的用户信息';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      // 修改isAdmin属性
+      user.isAdmin = true;
+      
+      // 保存回localStorage
+      localStorage.setItem('user_info', JSON.stringify(user));
+      
+      // 刷新显示
+      showCurrentUser();
+      
+      // 显示成功消息
+      successMessage.style.display = 'block';
+    }
+    
+    // 刷新应用
+    function refreshApp() {
+      window.location.href = '/';
+    }
+    
+    // 初始化显示
+    document.addEventListener('DOMContentLoaded', showCurrentUser);
+  </script>
+</body>
+</html>
